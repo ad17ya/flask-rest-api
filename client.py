@@ -21,8 +21,18 @@ import requests
 # response = requests.get("http://127.0.0.1:5000/hello")
 # print(response.headers)
 
-response = requests.get("http://127.0.0.1:5000/users/2")
-print(response.text)
+# response = requests.get("http://127.0.0.1:5000/users/2")
+# print(response.text)
 
-response = requests.get("http://127.0.0.1:5000/users/8")
+# response = requests.get("http://127.0.0.1:5000/users/8")
+# print(response.text)
+
+# Make an unauthorized request
+# response = requests.get("http://127.0.0.1:5000/secrets")
+# print(response.text)
+# print(response.headers)
+
+# Make an authorized request
+response = requests.get("http://127.0.0.1:5000/secrets", auth=("admin", "secret"))
 print(response.text)
+print(response.headers)
