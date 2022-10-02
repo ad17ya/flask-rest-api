@@ -1,8 +1,11 @@
 # Implementing a REST API with Python and Flask
 
+from telnetlib import STATUS
 from flask import Flask, url_for
 from flask import request
 from flask import json
+from flask import Response
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -20,10 +23,18 @@ def api_article(articleid):
 
 @app.route('/hello')
 def api_hello():
-    if 'name' in request.args:
-        return 'Hello ' + request.args['name']
-    else:
-        return 'Hello Anon'
+    data  = {
+        'hello' : 'world',
+        'number' : 3
+    }
+
+    js = json.dumps(data)
+
+    resp = jsonify(data)
+    resp.status_code = 200
+    resp.headers['Link'] = 'http://luisrei.com'
+
+    return resp
 
 @app.route('/echo', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def api_echo():
@@ -40,25 +51,22 @@ def api_echo():
 
 @app.route('/messages', methods=['POST'])
 def api_message():
-    try:
-        if request.headers['Content-Type'] == 'text/plain':
-            return "Text Message: " + request.data
+    if request.headers['Content-Type'] == 'text/plain':
+        return "Text Message: " + request.data
 
-        elif request.headers['Content-Type'] == 'application/json':
-            return "JSON Message: " + json.dumps(request.json)
-        
-        elif request.headers['Content-Type'] == 'application/octet-stream':
-            print("here")
-            f = open('./write_binary', 'wb')
-            f.write(request.data)
-            f.close()
-            return "Binary message written!"
+    elif request.headers['Content-Type'] == 'application/json':
+        return "JSON Message: " + json.dumps(request.json)
+    
+    elif request.headers['Content-Type'] == 'application/octet-stream':
+        print("here")
+        f = open('./write_binary', 'wb')
+        f.write(request.data)
+        f.close()
+        return "Binary message written!"
 
-        else:
-            return "415 Unsupported Media Type ;)"
+    else:
+        return "415 Unsupported Media Type ;)"
 
-    except Exception as err:
-        print(err)
 
 if __name__ == '__main__':
     app.run()
