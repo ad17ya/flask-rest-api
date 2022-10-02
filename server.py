@@ -127,6 +127,19 @@ def requires_auth(f):
 def api_secrets():
     return "Hello, Admin!"
 
+import logging
+file_handler = logging.FileHandler('app.log')
+app.logger.addHandler(file_handler)
+app.logger.setLevel(logging.INFO)
+
+@app.route('/log', methods = ['GET'])
+def api_log():
+    app.logger.info('Got a GET request')
+    app.logger.warning('This is a warning')
+    app.logger.error('Screaming bloody murder!')
+
+    return "check your logs\n"
+
 
 if __name__ == "__main__":
     app.run(debug=True)

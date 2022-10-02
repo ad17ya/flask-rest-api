@@ -33,6 +33,9 @@ import requests
 # print(response.headers)
 
 # Make an authorized request
-response = requests.get("http://127.0.0.1:5000/secrets", auth=("admin", "secret"))
+# response = requests.get("http://127.0.0.1:5000/secrets", auth=("admin", "secret"))
+# print(response.text)
+# print(response.headers)
+
+response = requests.get("http://127.0.0.1:5000/log")
 print(response.text)
-print(response.headers)
