@@ -18,5 +18,11 @@ import requests
 # response = requests.post("http://127.0.0.1:5000/messages", headers=headers, data=data)
 # print(response.text)
 
-response = requests.get("http://127.0.0.1:5000/hello")
-print(response.headers)
+# response = requests.get("http://127.0.0.1:5000/hello")
+# print(response.headers)
+
+response = requests.get("http://127.0.0.1:5000/users/2")
+print(response.text)
+
+response = requests.get("http://127.0.0.1:5000/users/8")
+print(response.text)
